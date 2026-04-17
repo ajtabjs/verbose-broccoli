@@ -12,7 +12,20 @@ font-family: "Figtree", Arial, Helvetica, sans-serif;
   margin: 0;
  gap: 2rem;
 }
+#dmca{
+  border: #ffffff solid 1px;
+height:7vh;
+width: 7vw;
+display:flex;
+flex-direction: column;
+text-align:center;
+ align-items: center;
+  justify-content: center;
+}
 
+#dmca a{
+
+}
 
 p, h1,a{
 
