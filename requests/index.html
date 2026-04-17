@@ -192,7 +192,7 @@
   <div id="wrapper">
     <div id="header" class="center">
       <h1>requests</h1>
-      <p>want a game added? fill this out :)</p>
+      <p>want a game added? fill this out :3</p>
     </div>
 
     <div class="request-form-wrapper">
@@ -267,6 +267,8 @@
       <p>ads help support the site!</p>
     </div>
   </div>
+
+  <script src="/js/gaaames.js"></script>
   <script>
     const form = document.querySelector('.pageclip-form');
     const submitBtn = form.querySelector('.pageclip-form__submit');
@@ -304,10 +306,44 @@
       }, 1000);
     }
 
-    adSubmitBtn.addEventListener('click', function () {
+    adSubmitBtn.addEventListener('click', async function () {
       modal.classList.remove('open');
-      // submit the actual form so pageclip handles it natively
-      form.requestSubmit();
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      const discordPayload = {
+        username: "game requests",
+        embeds: [{
+          title: "🎮 new game request",
+          color: 0xffffff,
+          fields: [
+            { name: "game", value: data.game_name || "—", inline: true },
+            { name: "type", value: data.game_type || "—", inline: true },
+            { name: "link", value: data.game_link ? `[open](${data.game_link})` : "—" },
+            { name: "notes", value: data.notes || "—" },
+          ],
+          footer: { text: "via requests form" },
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      try {
+        const res = await fetch('https://pageclip-discord.oro10jua.workers.dev', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ item: { payload: data } }),
+        });
+        if (res.ok) {
+          submitBtn.classList.add('pageclip-form__submit--success');
+          submitBtn.querySelector('span').textContent = 'sent!';
+        } else {
+          console.error('worker error:', res.status, await res.text());
+          submitBtn.querySelector('span').textContent = 'error, try again';
+        }
+      } catch (err) {
+        console.error('fetch error:', err);
+        submitBtn.querySelector('span').textContent = 'error, try again';
+      }
     });
   </script>
 </body>
