@@ -1,0 +1,29 @@
+@import url('https://fonts.upset.dev/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+
+
+body{
+background-color:#242424;
+font-family: "Figtree", Arial, Helvetica, sans-serif;
+}
+
+p, h1{
+
+color:white;
+
+}
+      .center {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+#div{
+
+text-align:center;
+
+}
+
+@media screen and (max-width: 500px) {
+}
