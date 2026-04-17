@@ -45,6 +45,10 @@ max-width: 100px;
 max-height:200px;
 margin: 0.5rem;
 width: 110px;
+display:flex;
+text-align:center;
+ align-items: center;
+  justify-content: center;
 }
 
 @media screen and (max-width: 500px) {
