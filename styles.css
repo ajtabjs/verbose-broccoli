@@ -50,15 +50,14 @@ text-align:center;
 }
 .card{
      border: #ffffff solid 1px;
-height:50px;
-max-width: 100px;
-max-height:200px;
 margin: 0.5rem;
-width: 110px;
 display:flex;
 text-align:center;
  align-items: center;
   justify-content: center;
+    min-width: fit-content; 
+    width: auto; 
+    height: auto; 
 }
 
 /* credit to bog for this css */
