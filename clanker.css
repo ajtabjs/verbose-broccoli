@@ -6,7 +6,7 @@
   overflow-x: auto;
   overflow-y: visible;
   gap: 2rem;
-  padding: 60px 80px 20px 20px;
+  padding: 60px 80px 20px 0;
   scroll-behavior: smooth;
   max-width: calc(100vw - 100px);
   margin: 0 auto;
@@ -18,7 +18,7 @@
 #wrapper {
   max-width: calc(100% - 100px);
   margin-right: auto;
-  margin-left: auto;
+  margin-left: 0;
   position: relative;
   z-index: 1;
 }
@@ -37,23 +37,25 @@
 /* For smaller screens, adjust padding */
 @media screen and (max-width: 768px) {
   #gamecards {
-    padding: 60px 70px 20px 10px;
+    padding: 60px 70px 20px 0;
     max-width: calc(100vw - 80px);
   }
-  
+
   #wrapper {
     max-width: calc(100% - 80px);
+    margin-left: 0;
   }
 }
 
 @media screen and (max-width: 500px) {
   #gamecards {
-    padding: 60px 60px 20px 10px;
+    padding: 60px 60px 20px 0;
     max-width: calc(100vw - 70px);
   }
-  
+
   #wrapper {
     max-width: calc(100% - 70px);
+    margin-left: 0;
   }
 }
 
