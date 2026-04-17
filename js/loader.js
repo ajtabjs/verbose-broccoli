@@ -8,7 +8,7 @@ const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 const isPort = params.get('port') === 'true';
 
-let pageUrl; // Store pageUrl to use later
+let pageUrl;
 
 fetch(check)
   .then(res => res.json())
@@ -18,22 +18,37 @@ fetch(check)
     const baseUrl = isPort ? urls.ports : urls.base;
     pageUrl = baseUrl + '/' + id + '/' + file;
     
-    // Fetch the HTML content
     return fetch(pageUrl).then(res => res.text());
   })
   .then(html => {
-    // Get the base path (directory) for relative resources
     const baseHref = pageUrl.substring(0, pageUrl.lastIndexOf('/') + 1);
     
-    // Inject HTML with base tag to fix relative paths
+    // Inject CSS to force the content to fill the iframe
+    const forcedStyles = `
+      <style>
+        html, body {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          overflow: auto !important;
+        }
+        body > * {
+          max-width: 100% !important;
+        }
+      </style>
+    `;
+    
+    // Insert base tag and forced styles
+    const modifiedHtml = html.replace('</head>', '<base href="' + baseHref + '">' + forcedStyles + '</head>');
+    
     const iframe = frame.contentDocument || frame.contentWindow.document;
     iframe.open();
-    iframe.write('<!DOCTYPE html><html><head><base href="' + baseHref + '"></head>' + html + '</html>');
+    iframe.write(modifiedHtml);
     iframe.close();
   })
   .catch((error) => {
     console.error('Error:', error);
-    // Fallback: try to load index.html
     const baseUrl = isPort ? urls.ports : urls.base;
     const fallbackUrl = baseUrl + '/' + id + '/index.html';
     const fallbackBaseHref = fallbackUrl.substring(0, fallbackUrl.lastIndexOf('/') + 1);
@@ -41,13 +56,27 @@ fetch(check)
     fetch(fallbackUrl)
       .then(res => res.text())
       .then(html => {
+        const forcedStyles = `
+          <style>
+            html, body {
+              margin: 0 !important;
+              padding: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              overflow: auto !important;
+            }
+          </style>
+        `;
+        
+        const modifiedHtml = html.replace('</head>', '<base href="' + fallbackBaseHref + '">' + forcedStyles + '</head>');
+        
         const iframe = frame.contentDocument || frame.contentWindow.document;
         iframe.open();
-        iframe.write('<!DOCTYPE html><html><head><base href="' + fallbackBaseHref + '"></head>' + html + '</html>');
+        iframe.write(modifiedHtml);
         iframe.close();
       })
       .catch(err => {
         console.error('Fallback also failed:', err);
-        frame.srcdoc = '<html><body><h1>Error loading game</h1></body></html>';
+        frame.srcdoc = '<html><body style="margin:0;padding:0;width:100vw;height:100vh;"><h1>Error loading game</h1></body></html>';
       });
   });
