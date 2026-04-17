@@ -82,6 +82,7 @@ text-align:center;
 	z-index: 1000;
 	padding: 15px 10px;
 	gap: 20px;
+  background-color: #242424; /* Add this line */
 }
 #wrapper{
 

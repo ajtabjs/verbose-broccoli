@@ -1,4 +1,4 @@
-/* horizontal-scroll.css - Makes game cards scrollable horizontally */
+/* Add to your horizontal-scroll.css or clanker.css */
 
 #gamecards {
   display: flex;
@@ -6,49 +6,53 @@
   overflow-x: auto;
   overflow-y: visible;
   gap: 2rem;
-  padding: 60px 20px 20px 20px;
+  padding: 60px 80px 20px 20px;
   scroll-behavior: smooth;
-  max-width: 95vw;
+  max-width: calc(100vw - 100px);
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
-/* Custom scrollbar styling */
-#gamecards::-webkit-scrollbar {
-  height: 8px;
-}
-
-#gamecards::-webkit-scrollbar-track {
-  background: #333;
-  border-radius: 4px;
-}
-
-#gamecards::-webkit-scrollbar-thumb {
-  background: #666;
-  border-radius: 4px;
-}
-
-#gamecards::-webkit-scrollbar-thumb:hover {
-  background: #888;
-}
-
-/* Ensure cards don't clip the bubbles */
-.game-link {
-  display: inline-block;
-  flex-shrink: 0;
-  margin: 0;
+/* Ensure the wrapper doesn't overlap the menu */
+#wrapper {
+  max-width: calc(100% - 100px);
+  margin-right: auto;
+  margin-left: auto;
   position: relative;
   z-index: 1;
 }
 
-.card {
-  margin: 0;
-  white-space: normal;
-  position: relative;
-  z-index: 1;
+/* Make sure the menu stays on top and doesn't get overlapped */
+#menu {
+  z-index: 1000;
+  background-color: #242424;
 }
 
+/* Prevent cards from going under the menu on hover */
 .card:hover {
-  z-index: 100;
+  z-index: 10;
+}
+
+/* For smaller screens, adjust padding */
+@media screen and (max-width: 768px) {
+  #gamecards {
+    padding: 60px 70px 20px 10px;
+    max-width: calc(100vw - 80px);
+  }
+  
+  #wrapper {
+    max-width: calc(100% - 80px);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #gamecards {
+    padding: 60px 60px 20px 10px;
+    max-width: calc(100vw - 70px);
+  }
+  
+  #wrapper {
+    max-width: calc(100% - 70px);
+  }
 }
