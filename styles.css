@@ -27,9 +27,7 @@ margin-bottom:0.5rem;
 }
 
 a {
-    margin:auto;
-text-align:center;
-    text-decoration:none;
+    text-decoration: none;
 }
 
 .cards{
@@ -41,6 +39,12 @@ max-height:200px;
 margin: 0.5rem;
 width: 110px;
 
+
+}
+.cards a{
+
+     margin-top: 0.5rem;
+    text-align: center;
 }
 
 @media screen and (max-width: 500px) {
