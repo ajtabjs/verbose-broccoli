@@ -1,3 +1,10 @@
-var frame = document.getElementById("gameframe");
+urls ={
+"base": "",
+"ports": ""
+}
 
-frame.src = ""
+const frame = document.getElementById("gameframe");
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  frame.src = 'https://yoursite.com/games/' + id + '/index.html';
