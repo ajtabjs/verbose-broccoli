@@ -53,16 +53,19 @@ text-align:center;
 }
 .card{
      border: #ffffff solid 1px;
-margin: 0.7rem;
-display:flex;
-text-align:center;
-padding-right:10%;
-padding-left:10%;
- align-items: center;
+  margin: 0.7rem;
+  display: flex;
+  text-align: center;
+  padding: 15px 10%;
+  align-items: center;
   justify-content: center;
-    min-width: fit-content; 
-    width: 7vw; 
-    height: 8vh; 
+  min-width: fit-content;
+  width: 7vw;
+  height: 8vh;
+  position: relative;
+  background-color: transparent;
+  transition: transform 0.3s ease;
+  cursor: pointer;
     
 }
 

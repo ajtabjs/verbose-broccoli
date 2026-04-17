@@ -6,10 +6,12 @@
   overflow-x: auto;
   overflow-y: visible;
   gap: 2rem;
-  padding: 40px 20px 20px 20px;
+  padding: 60px 20px 20px 20px;
   scroll-behavior: smooth;
   max-width: 95vw;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* Custom scrollbar styling */
@@ -31,7 +33,7 @@
   background: #888;
 }
 
-/* Keep the game-link and card styles but adjust for horizontal scrolling */
+/* Ensure cards don't clip the bubbles */
 .game-link {
   display: inline-block;
   flex-shrink: 0;
@@ -47,21 +49,6 @@
   z-index: 1;
 }
 
-/* Fix for bubbles going behind - ensure they stay on top */
-.image-bubble {
-  z-index: 100;
-  position: absolute;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-}
-
 .card:hover {
-  z-index: 10;
-}
-
-/* Make sure the container doesn't clip the bubbles */
-#gamecards {
-  overflow-x: auto;
-  overflow-y: visible;
+  z-index: 100;
 }
