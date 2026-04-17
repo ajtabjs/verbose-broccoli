@@ -1,12 +1,10 @@
-/* Add to your horizontal-scroll.css or clanker.css */
-
 #gamecards {
   display: flex;
   flex-direction: row;
   overflow-x: auto;
   overflow-y: visible;
   gap: 2rem;
-  padding: 60px 80px 20px 0;
+  padding: 60px 80px 20px 80px;
   scroll-behavior: smooth;
   max-width: calc(100vw - 100px);
   margin: 0 auto;
@@ -14,49 +12,15 @@
   z-index: 1;
 }
 
-/* Ensure the wrapper doesn't overlap the menu */
 #wrapper {
   max-width: calc(100% - 100px);
-  margin-right: auto;
-  margin-left: 0;
+  margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
-/* Make sure the menu stays on top and doesn't get overlapped */
-#menu {
-  z-index: 1000;
-  background-color: #242424;
-}
-
-/* Prevent cards from going under the menu on hover */
 .card:hover {
   z-index: 10;
-}
-
-/* For smaller screens, adjust padding */
-@media screen and (max-width: 768px) {
-  #gamecards {
-    padding: 60px 70px 20px 0;
-    max-width: calc(100vw - 80px);
-  }
-
-  #wrapper {
-    max-width: calc(100% - 80px);
-    margin-left: 0;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  #gamecards {
-    padding: 60px 60px 20px 0;
-    max-width: calc(100vw - 70px);
-  }
-
-  #wrapper {
-    max-width: calc(100% - 70px);
-    margin-left: 0;
-  }
 }
 
 #menu {
@@ -72,4 +36,28 @@
   padding: 10px 15px;
   gap: 20px;
   background-color: #242424;
+}
+
+@media screen and (max-width: 768px) {
+  #gamecards {
+    padding: 60px 70px 20px 70px;
+    max-width: calc(100vw - 80px);
+  }
+
+  #wrapper {
+    max-width: calc(100% - 80px);
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #gamecards {
+    padding: 60px 60px 20px 60px;
+    max-width: calc(100vw - 70px);
+  }
+
+  #wrapper {
+    max-width: calc(100% - 70px);
+    margin: 0 auto;
+  }
 }
