@@ -1,4 +1,4 @@
-const jasonloc = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/main.json";
+const jasonloc = "https://cdn.statically.io/gh/estrog3n/assetss@main/main.json";
 const portsLoc = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/ports.json";
 const imgBaseUrl = "https://cdn.jsdelivr.net/gh/estrog3n/img@latest";
 
@@ -8,6 +8,11 @@ Promise.all([
 ])
 .then(([games, ports]) => {
   const container = document.getElementById('gamecards');
+  
+  if (!container) {
+    console.error("Gamecards container not found!");
+    return;
+  }
 
   games.forEach(game => {
     const a = document.createElement('a');
@@ -19,19 +24,20 @@ Promise.all([
     const card = document.createElement('div');
     card.classList.add('card');
 
-    // Create image bubble above the text
+    // Only create image bubble if img exists and is not empty
     if (game.img && game.img.trim() !== "") {
       const imgBubble = document.createElement('div');
       imgBubble.classList.add('image-bubble');
       
       const img = document.createElement('img');
-      img.src = `${imgBaseUrl}/${game.img}`;
+      const imgUrl = `${imgBaseUrl}/${game.img}`;
+      img.src = imgUrl;
       img.alt = game.name;
       img.loading = "lazy";
       
+      // Hide bubble if image fails to load
       img.onerror = function() {
-        imgBubble.style.display = 'none'; // Hide bubble if image fails to load
-        console.warn(`Failed to load image: ${img.src}`);
+        imgBubble.style.display = 'none';
       };
       
       imgBubble.appendChild(img);
