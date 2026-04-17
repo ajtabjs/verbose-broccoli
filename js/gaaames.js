@@ -12,7 +12,7 @@ Promise.all([
     const a = document.createElement('a');
     const isPort = ports.some(p => p.id === game.id);
     a.href = './iframe.html?id=' + game.id + (isPort ? '&port=true' : '');
-    a.target = '_blank'; 
+
     const card = document.createElement('div');
     card.classList.add('card');
     card.textContent = game.name;
