@@ -1,4 +1,4 @@
-const jasonloc = "https://cdn.statically.io/gh/estrog3n/assetss@main/main.json";
+const jasonloc = "https://raw.githubusercontent.com/estrog3n/assetss/refs/heads/main/main.json";
 const portsLoc = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/ports.json";
 const imgBaseUrl = "https://cdn.jsdelivr.net/gh/estrog3n/img@latest";
 
