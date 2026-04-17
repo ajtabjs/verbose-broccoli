@@ -2,7 +2,7 @@ const urls = {
   "base": "https://cdn.jsdelivr.net/gh/ajtabjs/wl-main@master",
   "ports": "https://cdn.jsdelivr.net/gh/ajtabjs/wl-ports2@main"
 }
-const check = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/main.json"
+const check = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/ports.json"
 const frame = document.getElementById("gameframe");
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
