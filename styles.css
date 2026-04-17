@@ -6,7 +6,7 @@ background-color:#242424;
 font-family: "Figtree", Arial, Helvetica, sans-serif;
 }
 
-p, h1{
+p, h1,a{
 
 color:white;
 
@@ -19,9 +19,25 @@ color:white;
         align-items: center;
         justify-content: center;
       }
-#div{
 
-text-align:center;
+#header{
+margin-bottom:0.5rem;
+
+
+}
+
+a {
+
+    text-decoration:none;
+}
+
+.cards{
+
+border: #ffffff solid 1px;
+height:100px;
+max-width: 100px;
+max-height:50px;
+margin: 0.5rem;
 
 }
 
