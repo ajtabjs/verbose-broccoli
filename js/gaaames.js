@@ -8,7 +8,7 @@ jasonloc = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@main/main.json"
 
     games.forEach(game => {
       const a = document.createElement('a');
-      a.href = game.url;
+      a.href = './iframe.html?url=' + game.id;
 
       const card = document.createElement('div');
       card.classList.add('card');
