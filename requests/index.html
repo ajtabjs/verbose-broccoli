@@ -105,7 +105,88 @@
       opacity: 0.45;
       font-size: 0.85em;
     }
+
+    /* ad modal */
+    #ad-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #ad-modal.open {
+      display: flex;
+    }
+
+    #ad-modal-inner {
+      background: #242424;
+      border: 1px solid #ffffff;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      max-width: 340px;
+      width: 100%;
+    }
+
+    #ad-modal-inner h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: white;
+    }
+
+    #ad-modal-inner p {
+      margin: 0;
+      font-size: 0.8rem;
+      opacity: 0.55;
+      text-align: center;
+    }
+
+    #container-56642a332a1aaa05d84f77c811ea7ea2 {
+      width: 300px;
+      height: 250px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #ad-submit-btn {
+      background-color: transparent;
+      border: 1px solid #ffffff;
+      color: white;
+      font-family: "Figtree", Arial, Helvetica, sans-serif;
+      font-size: 0.9rem;
+      padding: 0.55rem 1.5rem;
+      cursor: not-allowed;
+      width: 100%;
+      opacity: 0.4;
+      transition: opacity 0.3s ease, background-color 0.2s ease, color 0.2s ease;
+    }
+
+    #ad-submit-btn.ready {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    #ad-submit-btn.ready:hover {
+      background-color: #ffffff;
+      color: #242424;
+    }
+
+    #ad-timer {
+      font-size: 0.78rem;
+      opacity: 0.5;
+      color: white;
+    }
   </style>
+  <script async="async" data-cfasync="false" src="https://recollectsideway.com/56642a332a1aaa05d84f77c811ea7ea2/invoke.js"></script>
 </head>
 <body>
   <div id="wrapper">
@@ -176,6 +257,60 @@
     <a href="/requests">requests</a>
   </div>
 
-  <script src="js/gaaames.js"></script>
+  <!-- ad modal -->
+  <div id="ad-modal">
+    <div id="ad-modal-inner">
+      <h3>please wait 5 seconds before submitting a game request</h3>
+      <div id="container-56642a332a1aaa05d84f77c811ea7ea2"></div>
+      <span id="ad-timer">please wait...</span>
+      <button id="ad-submit-btn" disabled>send request</button>
+      <p>ads help support the site!</p>
+    </div>
+  </div>
+
+  <script src="/js/gaaames.js"></script>
+  <script>
+    const form = document.querySelector('.pageclip-form');
+    const submitBtn = form.querySelector('.pageclip-form__submit');
+    const modal = document.getElementById('ad-modal');
+    const adContainer = document.getElementById('ad-container');
+    const adSubmitBtn = document.getElementById('ad-submit-btn');
+    const adTimer = document.getElementById('ad-timer');
+
+    // intercept submit in capture phase before pageclip sees it
+    submitBtn.addEventListener('click', function (e) {
+      if (!form.checkValidity()) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      openAdModal();
+    }, true);
+
+    function openAdModal() {
+      modal.classList.add('open');
+
+      let seconds = 5;
+      adTimer.textContent = `please wait ${seconds}s...`;
+      adSubmitBtn.disabled = true;
+      adSubmitBtn.classList.remove('ready');
+
+      const interval = setInterval(() => {
+        seconds--;
+        if (seconds <= 0) {
+          clearInterval(interval);
+          adTimer.textContent = 'good to go!';
+          adSubmitBtn.disabled = false;
+          adSubmitBtn.classList.add('ready');
+        } else {
+          adTimer.textContent = `please wait ${seconds}s...`;
+        }
+      }, 1000);
+    }
+
+    adSubmitBtn.addEventListener('click', function () {
+      modal.classList.remove('open');
+      // submit the actual form so pageclip handles it natively
+      form.requestSubmit();
+    });
+  </script>
 </body>
 </html>
