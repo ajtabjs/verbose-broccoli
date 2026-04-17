@@ -69,21 +69,6 @@ text-align:center;
     
 }
 
-/* credit to bog for this css */
-#menu{
-  border: #ffffff 1px solid;
-  	position: fixed;
-	top: 50%;
-	right: 10px;
-	transform: translateY(-50%);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	z-index: 1000;
-	padding: 15px 10px;
-	gap: 20px;
-  background-color: #242424; /* Add this line */
-}
 #wrapper{
 
   display: flex;
