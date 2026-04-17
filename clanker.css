@@ -1,0 +1,67 @@
+/* horizontal-scroll.css - Makes game cards scrollable horizontally */
+
+#gamecards {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: visible;
+  gap: 2rem;
+  padding: 40px 20px 20px 20px;
+  scroll-behavior: smooth;
+  max-width: 95vw;
+  margin: 0 auto;
+}
+
+/* Custom scrollbar styling */
+#gamecards::-webkit-scrollbar {
+  height: 8px;
+}
+
+#gamecards::-webkit-scrollbar-track {
+  background: #333;
+  border-radius: 4px;
+}
+
+#gamecards::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 4px;
+}
+
+#gamecards::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* Keep the game-link and card styles but adjust for horizontal scrolling */
+.game-link {
+  display: inline-block;
+  flex-shrink: 0;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  margin: 0;
+  white-space: normal;
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix for bubbles going behind - ensure they stay on top */
+.image-bubble {
+  z-index: 100;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+}
+
+.card:hover {
+  z-index: 10;
+}
+
+/* Make sure the container doesn't clip the bubbles */
+#gamecards {
+  overflow-x: auto;
+  overflow-y: visible;
+}
