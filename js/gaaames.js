@@ -1,19 +1,23 @@
-jasonloc = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@main/main.json" 
- 
- 
- fetch(jasonloc)
-  .then(res => res.json())
-  .then(games => {
-    const container = document.getElementById('gamecards');
+const jasonloc = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@main/main.json";
+const ports = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@main/ports.json";
 
-    games.forEach(game => {
-      const a = document.createElement('a');
-      a.href = './iframe.html?url=' + game.id;
+Promise.all([
+  fetch(jasonloc).then(res => res.json()).catch(e => { console.error("main.json failed:", e); return []; }),
+  fetch(ports).then(res => res.json()).catch(e => { console.error("ports.json failed:", e); return []; })
+])
+.then(([games, ports]) => {
+  const container = document.getElementById('gamecards');
 
-      const card = document.createElement('div');
-      card.classList.add('card');
-      card.textContent = game.name;
+  games.forEach(game => {
+    const a = document.createElement('a');
+    const isPort = ports.some(p => p.id === game.id);
+    a.href = './iframe.html?id=' + game.id + (isPort ? '&port=true' : '');
 
-      a.appendChild(card);
-      container.appendChild(a);
-    });})
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.textContent = game.name;
+
+    a.appendChild(card);
+    container.appendChild(a);
+  });
+});
