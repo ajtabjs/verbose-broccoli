@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>requests ~ potato</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="request a game" />
+  <link rel="stylesheet" type="text/css" href="../styles.css" />
+  <link rel="stylesheet" type="text/css" href="../clanker.css" />
+  <link rel="icon" href="favicon.png">
+  <script src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://s.pageclip.co/v1/pageclip.css" media="screen">
+  <style>
+    .request-form-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    #header p {
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 100%;
+    }
+
+    .field label {
+      color: white;
+      font-family: "Figtree", Arial, Helvetica, sans-serif;
+      font-size: 0.85rem;
+      opacity: 0.85;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      background-color: #1a1a1a;
+      border: 1px solid #ffffff;
+      color: white;
+      font-family: "Figtree", Arial, Helvetica, sans-serif;
+      font-size: 0.95rem;
+      padding: 0.6rem 0.8rem;
+      width: 100%;
+      box-sizing: border-box;
+      outline: none;
+      transition: border-color 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: #aaaaaa;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #555555;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .field select option {
+      background-color: #242424;
+      color: white;
+    }
+
+    .pageclip-form__submit {
+      background-color: transparent !important;
+      border: 1px solid #ffffff !important;
+      color: white !important;
+      font-family: "Figtree", Arial, Helvetica, sans-serif !important;
+      font-size: 0.95rem !important;
+      padding: 0.65rem 2rem !important;
+      cursor: pointer;
+      transition: background-color 0.2s ease, color 0.2s ease !important;
+      width: 100%;
+      margin-top: 0.25rem;
+      border-radius: 0 !important;
+    }
+
+    .pageclip-form__submit:not([disabled]):hover {
+      background-color: #ffffff !important;
+      color: #242424 !important;
+    }
+
+    .pageclip-form__submit.pageclip-form__submit--success {
+      border-color: #88dd88 !important;
+      color: #88dd88 !important;
+    }
+
+    .muted {
+      opacity: 0.45;
+      font-size: 0.85em;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header" class="center">
+      <h1>requests</h1>
+      <p>want a game added? fill this out :)</p>
+    </div>
+
+    <div class="request-form-wrapper">
+      <form
+        action="https://send.pageclip.co/nxgfc7AoXrluY5inMu7kHl8TLhir9v3T"
+        class="pageclip-form"
+        method="post"
+        style="width:100%;display:flex;flex-direction:column;gap:0.9rem;"
+      >
+        <div class="field">
+          <label for="game-name">game name</label>
+          <input
+            id="game-name"
+            type="text"
+            name="game_name"
+            placeholder="what game do you want?"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="game-type">game type</label>
+          <select id="game-type" name="game_type" required>
+            <option value="" disabled selected>select a type...</option>
+            <option value="flash">flash</option>
+            <option value="unity">unity</option>
+            <option value="html5">html5</option>
+            <option value="other">other / unsure</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="game-link">link to game <span class="muted">(optional)</span></label>
+          <input
+            id="game-link"
+            type="url"
+            name="game_link"
+            placeholder="https://..."
+          />
+        </div>
+
+        <div class="field">
+          <label for="notes">notes <span class="muted">(optional)</span></label>
+          <textarea
+            id="notes"
+            name="notes"
+            placeholder="anything else we should know?"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="pageclip-form__submit">
+          <span>send request</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="menu">
+    <a href="/index.html">home</a><br>
+    <a href="/settings">settings</a><br>
+    <a href="/credits">credits</a><br>
+    <a href="/requests">requests</a>
+  </div>
+
+  <script src="js/gaaames.js"></script>
+</body>
+</html>
