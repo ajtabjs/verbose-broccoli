@@ -16,9 +16,21 @@
     <div id="header" class="center">
   <h1>potato</h1>
 <p id="quotes"></p>
+<label id="nsfw-toggle" for="toggle-nsfw">
+  <input id="toggle-nsfw" type="checkbox" />
+  <span>horny?</span>
+</label>
 </div>
-  <div class="center cards" id="gamecards">
-
+  <div id="game-controls" aria-label="Game list controls">
+    <div id="list-controls-row">
+      <button id="select-prev" class="list-control-btn" type="button">select prev</button>
+      <button id="select-next" class="list-control-btn" type="button">select next</button>
+    </div>
+  </div>
+  <div id="gamecards-carousel" aria-label="Game card carousel">
+    <button id="carousel-left" class="carousel-arrow" type="button" aria-label="Scroll games left">&#8592;</button>
+    <div class="center cards" id="gamecards"></div>
+    <button id="carousel-right" class="carousel-arrow" type="button" aria-label="Scroll games right">&#8594;</button>
   </div><br><br>
   <button id="dmca" type="button">dmca</button>
   </div>
@@ -37,6 +49,7 @@
     </div>
   </div>
 
+  <script src="js/nsfw-games.js"></script>
   <script src="js/gaaames.js"></script>
     <script src="js/theme.js"></script>
        <script src="js/quotes.js"></script>

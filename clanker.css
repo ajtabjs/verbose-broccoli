@@ -1,3 +1,32 @@
+#game-controls {
+  width: min(1400px, calc(100vw - 24px));
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 78px clamp(16px, 6vw, 80px) 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#list-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-control-btn {
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+  font: inherit;
+}
+
 #gamecards {
   display: flex;
   flex-direction: row;
@@ -6,7 +35,7 @@
   overflow-x: auto;
   overflow-y: visible;
   gap: 2rem;
-  padding: 60px clamp(16px, 6vw, 80px) 24px;
+  padding: 20px clamp(16px, 6vw, 80px) 24px;
   width: min(1400px, calc(100vw - 24px));
   max-width: 100%;
   box-sizing: border-box;
@@ -15,6 +44,55 @@
   margin: 0 auto;
   position: relative;
   z-index: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+#gamecards-carousel {
+  width: min(1400px, calc(100vw - 24px));
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.carousel-arrow {
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+#nsfw-toggle {
+  margin: 0.55rem auto 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  padding: 0.45rem 0.8rem;
+  cursor: pointer;
+}
+
+#nsfw-toggle input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: #ffffff;
 }
 
 #wrapper {
@@ -28,6 +106,11 @@
 
 .card:hover {
   z-index: 10;
+}
+
+.game-link.is-selected .card {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
 }
 
 #menu {
@@ -96,9 +179,18 @@
 }
 
 @media screen and (max-width: 768px) {
+  #game-controls {
+    width: calc(100vw - 16px);
+  }
+
   #gamecards {
     gap: 1.4rem;
     width: calc(100vw - 16px);
+  }
+
+  #gamecards-carousel {
+    width: calc(100vw - 16px);
+    gap: 0.35rem;
   }
 
   #wrapper {
@@ -108,11 +200,21 @@
 }
 
 @media screen and (max-width: 500px) {
+  #game-controls {
+    width: calc(100vw - 8px);
+    padding-top: 72px;
+  }
+
   #gamecards {
-    padding-top: 64px;
+    padding-top: 16px;
     padding-bottom: 20px;
     gap: 1rem;
     width: calc(100vw - 8px);
+  }
+
+  #gamecards-carousel {
+    width: calc(100vw - 8px);
+    gap: 0.3rem;
   }
 
   #wrapper {

@@ -25,10 +25,12 @@ function applyTheme(name) {
   styleTag.textContent = `
     body { background-color: ${t.bg} !important; }
     p, h1, h2, h3, h4, h5, h6, a, span, label { color: ${t.accent} !important; }
-    .card, #dmca, #dmca-modal-inner, #dmca-modal-close, .setting-row, .field input, .field textarea, .field select {
+    .card, #dmca, #dmca-modal-inner, #dmca-modal-close, .setting-row, .field input, .field textarea, .field select, .list-control-btn, .carousel-arrow, #nsfw-toggle {
       border-color: ${t.accent} !important;
     }
     #menu a { color: ${t.accent} !important; }
+    #dmca, #dmca-modal-close, .list-control-btn, .carousel-arrow, #nsfw-toggle { color: ${t.accent} !important; }
+    .game-link.is-selected .card { background-color: color-mix(in srgb, ${t.accent} 18%, transparent) !important; }
     .toggle input:checked + .toggle-track { border-color: ${t.accent} !important; }
     .toggle input:checked + .toggle-track::after { background: ${t.accent} !important; }
     .theme-btn.active { border-color: ${t.accent} !important; }
