@@ -25,7 +25,7 @@ function applyTheme(name) {
   styleTag.textContent = `
     body { background-color: ${t.bg} !important; }
     p, h1, h2, h3, h4, h5, h6, a, span, label { color: ${t.accent} !important; }
-    .card, #dmca, .setting-row, .field input, .field textarea, .field select {
+    .card, #dmca, #dmca-modal-inner, #dmca-modal-close, .setting-row, .field input, .field textarea, .field select {
       border-color: ${t.accent} !important;
     }
     #menu a { color: ${t.accent} !important; }
@@ -36,7 +36,8 @@ function applyTheme(name) {
     .pageclip-form__submit:not([disabled]):hover { background-color: ${t.accent} !important; color: ${t.bg} !important; }
     #ad-submit-btn { border-color: ${t.accent} !important; color: ${t.accent} !important; }
     #ad-submit-btn.ready:hover { background-color: ${t.accent} !important; color: ${t.bg} !important; }
-    #ad-modal-inner { background: ${t.bg} !important; border-color: ${t.accent} !important; }
+    #ad-modal-inner, #dmca-modal-inner { background: ${t.bg} !important; border-color: ${t.accent} !important; }
+    #dmca-modal-inner, #dmca-modal-close { color: ${t.accent} !important; }
   `;
 }
 

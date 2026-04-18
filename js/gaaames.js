@@ -54,3 +54,36 @@ Promise.all([
     container.appendChild(a);
   });
 });
+
+function openDmcaModal() {
+  const modal = document.getElementById('dmca-modal');
+  if (!modal) return;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeDmcaModal() {
+  const modal = document.getElementById('dmca-modal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+function setupDmcaModal() {
+  const dmcaButton = document.getElementById('dmca');
+  const modal = document.getElementById('dmca-modal');
+  const closeButton = document.getElementById('dmca-modal-close');
+  if (!dmcaButton || !modal || !closeButton) return;
+
+  dmcaButton.addEventListener('click', openDmcaModal);
+  closeButton.addEventListener('click', closeDmcaModal);
+  modal.addEventListener('click', function (event) {
+    if (event.target === modal) closeDmcaModal();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && modal.classList.contains('open')) closeDmcaModal();
+  });
+}
+
+window.dmca = openDmcaModal;
+setupDmcaModal();

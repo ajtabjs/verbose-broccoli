@@ -1,19 +1,26 @@
 #gamecards {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   overflow-x: auto;
   overflow-y: visible;
   gap: 2rem;
-  padding: 60px 80px 20px 80px;
+  padding: 60px clamp(16px, 6vw, 80px) 24px;
+  width: min(1400px, calc(100vw - 24px));
+  max-width: 100%;
+  box-sizing: border-box;
   scroll-behavior: smooth;
-  max-width: calc(100vw - 100px);
+  scroll-padding-inline: clamp(16px, 6vw, 80px);
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
 #wrapper {
-  max-width: calc(100% - 100px);
+  width: 100%;
+  max-width: min(1500px, calc(100vw - 24px));
+  box-sizing: border-box;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -38,26 +45,78 @@
   background-color: #242424;
 }
 
+#dmca {
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+#dmca-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+#dmca-modal.open {
+  display: flex;
+}
+
+#dmca-modal-inner {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid #ffffff;
+  background: #242424;
+  color: #ffffff;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+#dmca-modal-inner h3,
+#dmca-modal-inner p {
+  margin: 0;
+}
+
+#dmca-modal-close {
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: inherit;
+  padding: 0.5rem 0.9rem;
+  width: fit-content;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   #gamecards {
-    padding: 60px 70px 20px 70px;
-    max-width: calc(100vw - 80px);
+    gap: 1.4rem;
+    width: calc(100vw - 16px);
   }
 
   #wrapper {
-    max-width: calc(100% - 80px);
+    max-width: calc(100vw - 16px);
     margin: 0 auto;
   }
 }
 
 @media screen and (max-width: 500px) {
   #gamecards {
-    padding: 60px 60px 20px 60px;
-    max-width: calc(100vw - 70px);
+    padding-top: 64px;
+    padding-bottom: 20px;
+    gap: 1rem;
+    width: calc(100vw - 8px);
   }
 
   #wrapper {
-    max-width: calc(100% - 70px);
+    max-width: calc(100vw - 8px);
     margin: 0 auto;
   }
 }

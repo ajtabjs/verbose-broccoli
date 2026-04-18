@@ -18,10 +18,8 @@
   <div class="center cards" id="gamecards">
 
   </div><br><br>
-  <a href="#" onclick="dmca()">
-  <div id="dmca">
-  dmca</div>
-</div></a>
+  <button id="dmca" type="button">dmca</button>
+  </div>
   <div id="menu">
     <a href="./index.html">home</a><br>
      <a href="/requests/">requests</a><br>
@@ -29,7 +27,13 @@
     <a href="/credits">credits</a>
   </div>
 
-
+  <div id="dmca-modal" aria-hidden="true">
+    <div id="dmca-modal-inner" role="dialog" aria-modal="true" aria-labelledby="dmca-modal-title">
+      <h3 id="dmca-modal-title">dmca notice</h3>
+      <p>placeholder info: this will contain dmca request details, contact information, and expected response timeline.</p>
+      <button id="dmca-modal-close" type="button">close</button>
+    </div>
+  </div>
 
   <script src="js/gaaames.js"></script>
     <script src="../js/theme.js"></script>
