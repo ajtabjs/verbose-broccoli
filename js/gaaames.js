@@ -19,8 +19,8 @@ const jasonlocs = [
 ];
 
 const portsLocs = [
-  "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/ports.json",
   "https://cdn.jsdelivr.net/gh/estrog3n/assetss@main/ports.json",
+  "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/ports.json",
   "https://raw.githubusercontent.com/estrog3n/assetss/refs/heads/main/ports.json",
 ];
 
