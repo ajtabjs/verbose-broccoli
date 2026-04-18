@@ -186,7 +186,12 @@
       color: white;
     }
   </style>
-  <script async="async" data-cfasync="false" src="https://recollectsideway.com/56642a332a1aaa05d84f77c811ea7ea2/invoke.js"></script>
+  <script>
+    const _s = JSON.parse(localStorage.getItem('potato-settings') || '{}');
+    if (!_s.disableAds) {
+      document.write('<script async="async" data-cfasync="false" src="https://recollectsideway.com/56642a332a1aaa05d84f77c811ea7ea2/invoke.js"><\/script>');
+    }
+  </script>
 </head>
 <body>
   <div id="wrapper">
@@ -280,6 +285,8 @@
     // intercept submit in capture phase before pageclip sees it
     submitBtn.addEventListener('click', function (e) {
       if (!form.checkValidity()) return;
+      const settings = JSON.parse(localStorage.getItem('potato-settings') || '{}');
+      if (settings.disableAds) return; // let form submit normally
       e.preventDefault();
       e.stopImmediatePropagation();
       openAdModal();
@@ -314,7 +321,7 @@
       const discordPayload = {
         username: "game requests",
         embeds: [{
-          title: "new game request",
+          title: "🎮 new game request",
           color: 0xffffff,
           fields: [
             { name: "game", value: data.game_name || "—", inline: true },

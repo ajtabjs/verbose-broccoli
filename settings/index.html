@@ -6,21 +6,399 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
   <link rel="stylesheet" type="text/css" href="../styles.css" />
-   <link rel="stylesheet" type="text/css" href="../clanker.css" />
+  <link rel="stylesheet" type="text/css" href="../clanker.css" />
   <link rel="icon" href="favicon.png">
+  <style>
+    .settings-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .settings-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .settings-section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      opacity: 1;
+      color: white;
+      font-family: "Figtree", sans-serif;
+      margin-bottom: 0.25rem;
+    }
+
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #ffffff;
+      padding: 0.75rem 1rem;
+      gap: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .setting-row:hover {
+      border-color: #aaaaaa;
+    }
+
+    .setting-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .setting-name {
+      color: white;
+      font-family: "Figtree", sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .setting-desc {
+      color: white;
+      font-family: "Figtree", sans-serif;
+      font-size: 0.75rem;
+      opacity: 1;
+    }
+
+    /* toggle switch */
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: #1a1a1a;
+      border: 1px solid #555;
+      cursor: pointer;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 14px;
+      height: 14px;
+      background: #555;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .toggle input:checked + .toggle-track {
+      background: #242424;
+      border-color: #ffffff;
+    }
+
+    .toggle input:checked + .toggle-track::after {
+      transform: translateX(16px);
+      background: #ffffff;
+    }
+
+    /* theme picker */
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .theme-btn {
+      border: 1px solid #444;
+      padding: 0;
+      cursor: pointer;
+      height: 48px;
+      position: relative;
+      transition: border-color 0.15s ease;
+      background: none;
+      overflow: hidden;
+    }
+
+    .theme-btn:hover {
+      border-color: #aaa;
+    }
+
+    .theme-btn.active {
+      border-color: #ffffff;
+      border-width: 2px;
+    }
+
+    .theme-btn span {
+      position: absolute;
+      bottom: 3px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.6rem;
+      font-family: "Figtree", sans-serif;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      letter-spacing: 0.05em;
+    }
+
+    .theme-preview {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* force white lowercase text */
+    h1, h2, h3, h4, h5, h6, p, a, span, label, button {
+      color: white !important;
+      text-transform: lowercase !important;
+    }
+
+    /* layout fixes */
+    body {
+      justify-content: flex-start !important;
+      padding: 2rem 1rem 6rem 1rem;
+      box-sizing: border-box;
+      min-height: 100vh;
+    }
+
+    #wrapper {
+      width: 100%;
+      max-width: 460px;
+      align-items: flex-start;
+    }
+
+    #header {
+      width: 100%;
+    }
+
+    /* save notice */
+    .save-notice {
+      font-size: 0.75rem;
+      color: #88dd88;
+      font-family: "Figtree", sans-serif;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      text-align: right;
+    }
+
+    .save-notice.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
   <div id="wrapper">
     <div id="header" class="center">
-  <h1>settings</h1></div>
-  <div></div>
-</div>
+      <h1>settings</h1>
+    </div>
+
+    <div class="settings-wrapper">
+
+      <!-- appearance -->
+      <div class="settings-section">
+        <div class="settings-section-label">appearance</div>
+
+        <div class="settings-section-label" style="margin-top:0.25rem; margin-bottom:0.25rem; opacity:0.3; font-size:0.65rem;">theme</div>
+        <div class="theme-grid">
+          <button class="theme-btn active" data-theme="default" title="default">
+            <div class="theme-preview" style="background:#242424;"></div>
+            <span>default</span>
+          </button>
+          <button class="theme-btn" data-theme="midnight" title="midnight">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3a);"></div>
+            <span>midnight</span>
+          </button>
+          <button class="theme-btn" data-theme="rose" title="rose">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#1a0a0a,#2a1010);"></div>
+            <span>rose</span>
+          </button>
+          <button class="theme-btn" data-theme="forest" title="forest">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#0a1a0a,#101a10);"></div>
+            <span>forest</span>
+          </button>
+          <button class="theme-btn" data-theme="slate" title="slate">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);"></div>
+            <span>slate</span>
+          </button>
+          <button class="theme-btn" data-theme="amber" title="amber">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#1a1200,#2a1e00);"></div>
+            <span>amber</span>
+          </button>
+          <button class="theme-btn" data-theme="ocean" title="ocean">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#001a2a,#002a3a);"></div>
+            <span>ocean</span>
+          </button>
+          <button class="theme-btn" data-theme="lavender" title="lavender">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#12001a,#1e002a);"></div>
+            <span>lavender</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ads -->
+      <div class="settings-section">
+        <div class="settings-section-label">ads</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-name">disable ads</span>
+            <span class="setting-desc">hides ads across the site. please consider keeping them on :)</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-ads" />
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- misc -->
+      <div class="settings-section">
+        <div class="settings-section-label">misc</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-name">reduced motion</span>
+            <span class="setting-desc">disables animations and transitions</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-motion" />
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-name">show nsfw</span>
+            <span class="setting-desc">unhides games marked as 18+</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-nsfw" />
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span class="save-notice" id="save-notice">saved!</span>
+        <button onclick="resetSettings()" style="background:transparent;border:1px solid #444;color:white;font-family:'Figtree',sans-serif;font-size:0.8rem;padding:0.4rem 1rem;cursor:pointer;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='#fff'" onmouseout="this.style.borderColor='#444'">reset to defaults</button>
+      </div>
+
+    </div>
+  </div>
+
   <div id="menu">
-   <a href="./index.html">home</a><br>
-     <a href="/requests/">requests</a><br>
+    <a href="./index.html">home</a><br>
+    <a href="/requests/">requests</a><br>
     <a href="/settings">settings</a><br>
     <a href="/credits">credits</a>
   </div>
-   
+
+  <script>
+    const THEMES = {
+      default:   { bg: '#242424', accent: '#ffffff' },
+      midnight:  { bg: '#0d0d1f', accent: '#7b8fff' },
+      rose:      { bg: '#1a0a0a', accent: '#ff8888' },
+      forest:    { bg: '#0a140a', accent: '#88cc88' },
+      slate:     { bg: '#1c1c1e', accent: '#aaaaaa' },
+      amber:     { bg: '#181200', accent: '#ffcc44' },
+      ocean:     { bg: '#001622', accent: '#44bbdd' },
+      lavender:  { bg: '#100018', accent: '#cc88ff' },
+    };
+
+    function loadSettings() {
+      const s = JSON.parse(localStorage.getItem('potato-settings') || '{}');
+      return {
+        theme: s.theme || 'default',
+        disableAds: s.disableAds || false,
+        reducedMotion: s.reducedMotion || false,
+        showNsfw: s.showNsfw || false,
+      };
+    }
+
+    function saveSettings(settings) {
+      localStorage.setItem('potato-settings', JSON.stringify(settings));
+      const notice = document.getElementById('save-notice');
+      notice.classList.add('show');
+      setTimeout(() => notice.classList.remove('show'), 1500);
+    }
+
+    function applyTheme(name) {
+      const t = THEMES[name] || THEMES.default;
+      document.body.style.backgroundColor = t.bg;
+      document.querySelectorAll('p,h1,h2,h3,h4,h5,h6,a,.setting-name').forEach(el => {
+        el.style.color = t.accent;
+      });
+      document.querySelectorAll('.setting-row, #dmca').forEach(el => {
+        el.style.borderColor = t.accent;
+      });
+      document.querySelectorAll('.toggle input:checked + .toggle-track').forEach(el => {
+        el.style.borderColor = t.accent;
+      });
+      document.querySelectorAll('.toggle input:checked + .toggle-track::after').forEach(el => {
+        el.style.background = t.accent;
+      });
+    }
+
+    function applyAll(settings) {
+      applyTheme(settings.theme);
+
+      // theme buttons
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.theme === settings.theme);
+      });
+
+      document.getElementById('toggle-ads').checked = settings.disableAds;
+      document.getElementById('toggle-motion').checked = settings.reducedMotion;
+      document.getElementById('toggle-nsfw').checked = settings.showNsfw;
+
+      if (settings.reducedMotion) {
+        document.documentElement.style.setProperty('--transition', 'none');
+        document.querySelectorAll('*').forEach(el => {
+          el.style.transition = 'none';
+          el.style.animation = 'none';
+        });
+      }
+    }
+
+    function resetSettings() {
+      const defaults = { theme: 'default', disableAds: false, reducedMotion: false, showNsfw: false };
+      saveSettings(defaults);
+      applyAll(defaults);
+    }
+
+    // init
+    const settings = loadSettings();
+    applyAll(settings);
+
+    // theme buttons
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        settings.theme = btn.dataset.theme;
+        applyAll(settings);
+        saveSettings(settings);
+      });
+    });
+
+    // toggles
+    document.getElementById('toggle-ads').addEventListener('change', e => {
+      settings.disableAds = e.target.checked;
+      saveSettings(settings);
+    });
+
+    document.getElementById('toggle-motion').addEventListener('change', e => {
+      settings.reducedMotion = e.target.checked;
+      saveSettings(settings);
+    });
+
+    document.getElementById('toggle-nsfw').addEventListener('change', e => {
+      settings.showNsfw = e.target.checked;
+      saveSettings(settings);
+    });
+  </script>
 </body>
 </html>
