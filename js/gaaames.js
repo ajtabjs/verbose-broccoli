@@ -14,7 +14,11 @@ Promise.all([
     return;
   }
 
-  games.forEach(game => {
+  const sortedGames = [...games].sort((a, b) =>
+    (a.name || "").localeCompare(b.name || "", undefined, { sensitivity: "base" })
+  );
+
+  sortedGames.forEach(game => {
     const a = document.createElement('a');
     a.target = "_blank";
     const isPort = ports.some(p => p.id === game.id);
