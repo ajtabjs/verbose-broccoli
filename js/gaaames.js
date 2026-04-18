@@ -1,14 +1,37 @@
-const jasonloc = "https://raw.githubusercontent.com/estrog3n/assetss/refs/heads/main/main.json";
-const portsLoc = "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/ports.json";
+async function fetchWithFallback(urls) {
+  for (const url of urls) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      console.warn(`Failed to fetch ${url}:`, e);
+    }
+  }
+  console.error("All URLs failed for:", urls[0]);
+  return [];
+}
+
+const jasonlocs = [
+  "https://raw.githubusercontent.com/estrog3n/assetss/refs/heads/main/main.json",
+  "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/main.json",
+  "https://cdn.jsdelivr.net/gh/estrog3n/assetss@main/main.json",
+];
+
+const portsLocs = [
+  "https://cdn.jsdelivr.net/gh/estrog3n/assetss@latest/ports.json",
+  "https://cdn.jsdelivr.net/gh/estrog3n/assetss@main/ports.json",
+  "https://raw.githubusercontent.com/estrog3n/assetss/refs/heads/main/ports.json",
+];
+
 const imgBaseUrl = "https://cdn.jsdelivr.net/gh/estrog3n/img@latest";
 
 Promise.all([
-  fetch(jasonloc).then(res => res.json()).catch(e => { console.error("main.json failed:", e); return []; }),
-  fetch(portsLoc).then(res => res.json()).catch(e => { console.error("ports.json failed:", e); return []; })
-])
-.then(([games, ports]) => {
+  fetchWithFallback(jasonlocs),
+  fetchWithFallback(portsLocs)
+]).then(([games, ports]) => {
   const container = document.getElementById('gamecards');
-  
+
   if (!container) {
     console.error("Gamecards container not found!");
     return;
@@ -21,6 +44,7 @@ Promise.all([
   sortedGames.forEach(game => {
     const a = document.createElement('a');
     a.target = "_blank";
+
     const isPort = ports.some(p => p.id === game.id);
     a.href = './iframe.html?id=' + game.id + (isPort ? '&port=true' : '');
     a.classList.add('game-link');
@@ -28,27 +52,23 @@ Promise.all([
     const card = document.createElement('div');
     card.classList.add('card');
 
-    // Only create image bubble if img exists and is not empty
     if (game.img && game.img.trim() !== "") {
       const imgBubble = document.createElement('div');
       imgBubble.classList.add('image-bubble');
-      
+
       const img = document.createElement('img');
-      const imgUrl = `${imgBaseUrl}/${game.img}`;
-      img.src = imgUrl;
+      img.src = `${imgBaseUrl}/${game.img}`;
       img.alt = game.name;
       img.loading = "lazy";
-      
-      // Hide bubble if image fails to load
-      img.onerror = function() {
+
+      img.onerror = function () {
         imgBubble.style.display = 'none';
       };
-      
+
       imgBubble.appendChild(img);
       card.appendChild(imgBubble);
     }
 
-    // Add game name text
     const title = document.createElement('span');
     title.classList.add('game-title');
     title.textContent = game.name;
@@ -81,9 +101,11 @@ function setupDmcaModal() {
 
   dmcaButton.addEventListener('click', openDmcaModal);
   closeButton.addEventListener('click', closeDmcaModal);
+
   modal.addEventListener('click', function (event) {
     if (event.target === modal) closeDmcaModal();
   });
+
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape' && modal.classList.contains('open')) closeDmcaModal();
   });
