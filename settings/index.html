@@ -7,6 +7,7 @@
   <meta name="description" content="" />
   <link rel="stylesheet" type="text/css" href="../styles.css" />
   <link rel="stylesheet" type="text/css" href="../clanker.css" />
+  <script src="../js/theme.js"></script>
   <link rel="icon" href="favicon.png">
   <style>
     .settings-wrapper {
@@ -292,113 +293,12 @@
   </div>
 
   <div id="menu">
-    <a href="./index.html">home</a><br>
+    <a href="/index.html">home</a><br>
     <a href="/requests/">requests</a><br>
     <a href="/settings">settings</a><br>
     <a href="/credits">credits</a>
   </div>
 
-  <script>
-    const THEMES = {
-      default:   { bg: '#242424', accent: '#ffffff' },
-      midnight:  { bg: '#0d0d1f', accent: '#7b8fff' },
-      rose:      { bg: '#1a0a0a', accent: '#ff8888' },
-      forest:    { bg: '#0a140a', accent: '#88cc88' },
-      slate:     { bg: '#1c1c1e', accent: '#aaaaaa' },
-      amber:     { bg: '#181200', accent: '#ffcc44' },
-      ocean:     { bg: '#001622', accent: '#44bbdd' },
-      lavender:  { bg: '#100018', accent: '#cc88ff' },
-    };
-
-    function loadSettings() {
-      const s = JSON.parse(localStorage.getItem('potato-settings') || '{}');
-      return {
-        theme: s.theme || 'default',
-        disableAds: s.disableAds || false,
-        reducedMotion: s.reducedMotion || false,
-        showNsfw: s.showNsfw || false,
-      };
-    }
-
-    function saveSettings(settings) {
-      localStorage.setItem('potato-settings', JSON.stringify(settings));
-      const notice = document.getElementById('save-notice');
-      notice.classList.add('show');
-      setTimeout(() => notice.classList.remove('show'), 1500);
-    }
-
-    function applyTheme(name) {
-      const t = THEMES[name] || THEMES.default;
-      document.body.style.backgroundColor = t.bg;
-      document.querySelectorAll('p,h1,h2,h3,h4,h5,h6,a,.setting-name').forEach(el => {
-        el.style.color = t.accent;
-      });
-      document.querySelectorAll('.setting-row, #dmca').forEach(el => {
-        el.style.borderColor = t.accent;
-      });
-      document.querySelectorAll('.toggle input:checked + .toggle-track').forEach(el => {
-        el.style.borderColor = t.accent;
-      });
-      document.querySelectorAll('.toggle input:checked + .toggle-track::after').forEach(el => {
-        el.style.background = t.accent;
-      });
-    }
-
-    function applyAll(settings) {
-      applyTheme(settings.theme);
-
-      // theme buttons
-      document.querySelectorAll('.theme-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.theme === settings.theme);
-      });
-
-      document.getElementById('toggle-ads').checked = settings.disableAds;
-      document.getElementById('toggle-motion').checked = settings.reducedMotion;
-      document.getElementById('toggle-nsfw').checked = settings.showNsfw;
-
-      if (settings.reducedMotion) {
-        document.documentElement.style.setProperty('--transition', 'none');
-        document.querySelectorAll('*').forEach(el => {
-          el.style.transition = 'none';
-          el.style.animation = 'none';
-        });
-      }
-    }
-
-    function resetSettings() {
-      const defaults = { theme: 'default', disableAds: false, reducedMotion: false, showNsfw: false };
-      saveSettings(defaults);
-      applyAll(defaults);
-    }
-
-    // init
-    const settings = loadSettings();
-    applyAll(settings);
-
-    // theme buttons
-    document.querySelectorAll('.theme-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        settings.theme = btn.dataset.theme;
-        applyAll(settings);
-        saveSettings(settings);
-      });
-    });
-
-    // toggles
-    document.getElementById('toggle-ads').addEventListener('change', e => {
-      settings.disableAds = e.target.checked;
-      saveSettings(settings);
-    });
-
-    document.getElementById('toggle-motion').addEventListener('change', e => {
-      settings.reducedMotion = e.target.checked;
-      saveSettings(settings);
-    });
-
-    document.getElementById('toggle-nsfw').addEventListener('change', e => {
-      settings.showNsfw = e.target.checked;
-      saveSettings(settings);
-    });
-  </script>
+  <script src="../js/settings.js"></script>
 </body>
 </html>
