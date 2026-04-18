@@ -13,6 +13,8 @@
      "something that shows up on the embed preview",
      "oh hey",
      "clanker",
+     "c418 is the GOAT",
+     "shoutout my friend that made traverse",
      "follow @pydra on defcon.social",
      "wavelength had over 300 users tracked before the chat crashed",
      "someone add me on steam please, i need people to play with 1314080231",
