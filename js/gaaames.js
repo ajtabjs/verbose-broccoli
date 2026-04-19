@@ -25,16 +25,6 @@ const portsLocs = [
 ];
 
 const imgBaseUrl = "https://cdn.jsdelivr.net/gh/estrog3n/img@latest";
-const nsfwGameConfig = Array.isArray(window.nsfwGames) ? window.nsfwGames : [];
-const nsfwGameIds = new Set(
-  nsfwGameConfig
-    .map(entry => {
-      if (typeof entry === "string") return entry.trim();
-      if (entry && typeof entry.id === "string") return entry.id.trim();
-      return "";
-    })
-    .filter(id => id !== "")
-);
 
 let renderedGameLinks = [];
 let selectedGameIndex = -1;
@@ -140,6 +130,8 @@ function setupListControls(container) {
 function setupNsfwToggle() {
   const nsfwToggle = document.getElementById("toggle-nsfw");
   if (!(nsfwToggle instanceof HTMLInputElement)) return;
+  nsfwToggle.checked = false;
+  showNsfwGames = false;
 
   nsfwToggle.addEventListener("change", function () {
     showNsfwGames = nsfwToggle.checked;
@@ -151,6 +143,18 @@ Promise.all([
   fetchWithFallback(jasonlocs),
   fetchWithFallback(portsLocs)
 ]).then(([games, ports]) => {
+  // Read window.nsfwGames lazily here, after all scripts have executed
+  const nsfwGameConfig = Array.isArray(window.nsfwGames) ? window.nsfwGames : [];
+  const nsfwGameIds = new Set(
+    nsfwGameConfig
+      .map(entry => {
+        if (typeof entry === "string") return entry.trim();
+        if (entry && typeof entry.id === "string") return entry.id.trim();
+        return "";
+      })
+      .filter(id => id !== "")
+  );
+
   const container = document.getElementById('gamecards');
 
   if (!container) {
