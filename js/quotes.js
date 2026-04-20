@@ -9,6 +9,7 @@
         "used to be friends with 3kh0",
         "i'm friends with the owner of bliish.com!!",
         "LIVING THE DREAM!! ON EASTERN LANDIA ISLAND!!",
+        `"I CAN'T STOP PLAYING TOMODACHI LIFE" - boberto`,
         "shoutout the land, y'all are goats <3",
         "the",
         "gold gold gold!",
