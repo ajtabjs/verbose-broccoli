@@ -2,7 +2,6 @@
   width: min(1400px, calc(100vw - 24px));
   max-width: 100%;
   margin: 0 auto;
-  padding: 78px clamp(16px, 6vw, 80px) 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
