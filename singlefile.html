@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>potato ~ single file</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="All-in-one site" />
+  <link rel="icon" href="favicon.png">
+  <style>
+/* --- styles.css --- */
+body{
+background-color:#242424;
+font-family: Arial, Helvetica, sans-serif;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+margin: 0;
+gap: 2rem;
+}
+#dmca{
+border: #ffffff solid 1px;
+height:7vh;
+width: 7vw;
+display:flex;
+flex-direction: column;
+text-align:center;
+align-items: center;
+justify-content: center;
+}
+.underline{
+text-decoration: underline;
+}
+p, h1,a,h2,h3,h4,h5,h6 {
+color:white;
+text-align: center;
+}
+#header{
+margin-bottom:0.5rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+a {
+text-decoration: none;
+}
+.cards{
+display:flex;
+text-align:center;
+align-items: center;
+}
+/* --- bubble.css --- */
+.game-link {
+text-decoration: none;
+display: inline-block;
+margin: 10px;
+position: relative;
+z-index: 1;
+}
+.image-bubble {
+position: absolute;
+top: -55px;
+left: 50%;
+transform: translateX(-50%) scale(0);
+width: 60px;
+height: 60px;
+background: white;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+z-index: 9999;
+opacity: 0;
+transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s ease;
+pointer-events: none;
+}
+.card:hover .image-bubble {
+transform: translateX(-50%) scale(1);
+opacity: 1;
+}
+.image-bubble img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+.game-title {
+color: white;
+font-weight: 500;
+text-align: center;
+margin-top: 5px;
+position: relative;
+z-index: 2;
+}
+/* --- clanker.css --- */
+#game-controls {
+width: min(1400px, calc(100vw - 24px));
+max-width: 100%;
+margin: 0 auto;
+box-sizing: border-box;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0.75rem;
+}
+#list-controls-row {
+display: flex;
+flex-wrap: wrap;
+gap: 0.55rem;
+align-items: center;
+justify-content: center;
+}
+.list-control-btn {
+border: 1px solid #ffffff;
+background: transparent;
+color: #ffffff;
+padding: 0.45rem 0.8rem;
+cursor: pointer;
+font: inherit;
+}
+#gamecards {
+display: flex;
+flex-direction: row;
+justify-content: flex-start;
+align-items: center;
+overflow-x: auto;
+overflow-y: visible;
+gap: 2rem;
+padding: 60px clamp(16px, 6vw, 80px) 24px;
+width: min(1400px, calc(100vw - 24px));
+max-width: 100%;
+box-sizing: border-box;
+scroll-behavior: smooth;
+scroll-padding-inline: clamp(16px, 6vw, 80px);
+margin: 0 auto;
+position: relative;
+z-index: 1;
+flex: 1 1 auto;
+min-width: 0;
+}
+#gamecards-carousel {
+width: min(1400px, calc(100vw - 24px));
+max-width: 100%;
+margin: 0 auto;
+display: flex;
+align-items: center;
+gap: 0.45rem;
+overflow: visible;
+}
+.carousel-arrow {
+border: 1px solid #ffffff;
+background: transparent;
+color: #ffffff;
+min-width: 2.2rem;
+height: 2.2rem;
+cursor: pointer;
+font: inherit;
+line-height: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+}
+.carousel-arrow:disabled {
+opacity: 0.45;
+cursor: not-allowed;
+}
+#nsfw-toggle {
+margin: 0.55rem auto 0;
+display: inline-flex;
+align-items: center;
+gap: 0.45rem;
+color: #ffffff;
+border: 1px solid #ffffff;
+padding: 0.45rem 0.8rem;
+cursor: pointer;
+}
+#nsfw-toggle input {
+width: 1rem;
+height: 1rem;
+margin: 0;
+accent-color: #ffffff;
+}
+#wrapper {
+width: 100%;
+max-width: min(1500px, calc(100vw - 24px));
+box-sizing: border-box;
+margin: 0 auto;
+position: relative;
+z-index: 1;
+}
+.card:hover {
+z-index: 10;
+}
+.game-link.is-selected .card {
+outline: 2px solid #ffffff;
+outline-offset: 2px;
+}
+#menu {
+border: #ffffff 1px solid;
+position: fixed;
+top: 10px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+flex-direction: row;
+align-items: center;
+z-index: 1000;
+padding: 10px 15px;
+gap: 20px;
+background-color: #242424;
+}
+#dmca {
+background: transparent;
+color: #ffffff;
+font: inherit;
+cursor: pointer;
+}
+#dmca-modal {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0, 0, 0, 0.75);
+z-index: 1200;
+align-items: center;
+justify-content: center;
+padding: 1rem;
+box-sizing: border-box;
+}
+#dmca-modal.open {
+display: flex;
+}
+#dmca-modal-inner {
+width: 100%;
+max-width: 420px;
+border: 1px solid #ffffff;
+background: #242424;
+color: #ffffff;
+padding: 1.25rem;
+display: flex;
+flex-direction: column;
+gap: 0.75rem;
+text-align: left;
+}
+#dmca-modal-inner h3,
+#dmca-modal-inner p {
+margin: 0;
+}
+#dmca-modal-close {
+border: 1px solid #ffffff;
+background: transparent;
+color: inherit;
+padding: 0.5rem 0.9rem;
+width: fit-content;
+cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+#game-controls {
+width: calc(100vw - 16px);
+}
+#gamecards {
+gap: 1.4rem;
+width: calc(100vw - 16px);
+}
+#gamecards-carousel {
+width: calc(100vw - 16px);
+gap: 0.35rem;
+}
+#wrapper {
+max-width: calc(100vw - 16px);
+margin: 0 auto;
+}
+}
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header" class="center">
+      <h1 id="main-title">potato</h1>
+      <p id="quotes"></p>
+      <label id="nsfw-toggle" for="toggle-nsfw">
+        <input id="toggle-nsfw" type="checkbox" autocomplete="off" />
+        <span>horny?</span>
+      </label>
+    </div>
+    <div id="tab-bar" style="margin: 2rem 0 1rem 0; display: flex; gap: 1.5rem; justify-content: center;">
+      <button class="tab-btn" data-tab="home">home</button>
+      <button class="tab-btn" data-tab="requests">requests</button>
+      <button class="tab-btn" data-tab="settings">settings</button>
+      <button class="tab-btn" data-tab="credits">credits</button>
+    </div>
+    <div id="tab-content"></div>
+  </div>
+  <div id="menu">
+    <a href="#home">home</a>
+    <a href="#requests">requests</a>
+    <a href="#settings">settings</a>
+    <a href="#credits">credits</a>
+  </div>
+  <div id="dmca-modal" aria-hidden="true">
+    <div id="dmca-modal-inner" role="dialog" aria-modal="true" aria-labelledby="dmca-modal-title">
+      <h3 id="dmca-modal-title">dmca</h3>
+      <p>If you own or developed a game that is on here and would like it removed, please email ajsw@waifu.club or ping ms.isosceles in the <a href="https://discord.gg/Yav59M7Hfn" class="underline" target="_blank">discord server</a>.</p>
+      <button id="dmca-modal-close" type="button">close</button>
+    </div>
+  </div>
+  <script>
+// --- theme.js ---
+const THEMES = {
+  default:  { bg: '#242424', accent: '#ffffff' },
+  midnight: { bg: '#0d0d1f', accent: '#7b8fff' },
+  rose:     { bg: '#1a0a0a', accent: '#ff8888' },
+  forest:   { bg: '#0a140a', accent: '#88cc88' },
+  slate:    { bg: '#1c1c1e', accent: '#aaaaaa' },
+  amber:    { bg: '#181200', accent: '#ffcc44' },
+  ocean:    { bg: '#001622', accent: '#44bbdd' },
+  lavender: { bg: '#100018', accent: '#cc88ff' },
+};
+function applyTheme(name) {
+  const t = THEMES[name] || THEMES.default;
+  document.body.style.backgroundColor = t.bg;
+  let styleTag = document.getElementById('theme-style');
+  if (!styleTag) {
+    styleTag = document.createElement('style');
+    styleTag.id = 'theme-style';
+    document.head.appendChild(styleTag);
+  }
+  styleTag.textContent = `
+    body { background-color: ${t.bg} !important; }
+    p, h1, h2, h3, h4, h5, h6, a, span, label { color: ${t.accent} !important; }
+    .card, #dmca, #dmca-modal-inner, #dmca-modal-close, .setting-row, .field input, .field textarea, .field select, .list-control-btn, .carousel-arrow, #nsfw-toggle {
+      border-color: ${t.accent} !important;
+    }
+    #menu a { color: ${t.accent} !important; }
+    #dmca, #dmca-modal-close, .list-control-btn, .carousel-arrow, #nsfw-toggle { color: ${t.accent} !important; }
+    .game-link.is-selected .card { background-color: color-mix(in srgb, ${t.accent} 18%, transparent) !important; }
+    .toggle input:checked + .toggle-track { border-color: ${t.accent} !important; }
+    .toggle input:checked + .toggle-track::after { background: ${t.accent} !important; }
+    .theme-btn.active { border-color: ${t.accent} !important; }
+    .pageclip-form__submit { border-color: ${t.accent} !important; color: ${t.accent} !important; }
+    .pageclip-form__submit:not([disabled]):hover { background-color: ${t.accent} !important; color: ${t.bg} !important; }
+    #ad-submit-btn { border-color: ${t.accent} !important; color: ${t.accent} !important; }
+    #ad-submit-btn.ready:hover { background-color: ${t.accent} !important; color: ${t.bg} !important; }
+    #ad-modal-inner, #dmca-modal-inner { background: ${t.bg} !important; border-color: ${t.accent} !important; }
+    #dmca-modal-inner, #dmca-modal-close { color: ${t.accent} !important; }
+  `;
+}
+(function () {
+  const s = JSON.parse(localStorage.getItem('potato-settings') || '{}');
+  applyTheme(s.theme || 'default');
+})();
+// --- quotes.js ---
+document.addEventListener("DOMContentLoaded", function() {
+  const quotes = [
+    "the studio of sparkles",
+    "made by swag developers", 
+    "super gay",
+    "ready to build amazing stuff",
+    "amazing stuff",
+    "used to be friends with 3kh0",
+    "i'm friends with the owner of bliish.com!!",
+    "LIVING THE DREAM!! ON EASTERN LANDIA ISLAND!!",
+    "shoutout the land, y'all are goats <3",
+    "the",
+    "a great site on computers, somewhat good for mobile as well",
+    "let's make something cool",
+    "something cool",
+    "bryce is secretly a femboy but no one will know since no one reads this",
+    "shoutout to t0p for letting me borrow his code for this",
+    "something that shows up on the embed preview",
+    "oh hey",
+    "clanker",
+    "c418 is the GOAT",
+    "shoutout my friend that made traverse",
+    "unblockify is thatoneperson real????",
+    "follow @pydra on defcon.social",
+    "wavelength had over 300 users tracked before the chat crashed",
+    "someone add me on steam please, i need people to play with 1314080231",
+    "my computer is a potato so that's why the site is named this",
+    "why are we so gay",
+    "isosceles triangle does eventually devolve into compressed jpg",
+    "this is random everytime by the way",
+    "boston industries",
+    "please request games i need the ad revenue",
+    "TSArchive moment",
+    "shoutout to Mr J",
+    "i miss u Mr J",
+    "sup guys here's my friends debit card info 4097 5801 1034 2265 expiry 05/30 cvv 553",
+    `"I will say, I do love how we are just decompiling games cause we want them on websites, totally ignoring the other implications of that like being able to fix abandonware, mod games, archival, basically just any shit we want" - MinoDab492`,
+    "i literally only have $2.66 in my wallet right now",
+    "i have 17 cents in ad revenue from the time caesium had ads for not even a day",
+    "im friends with a communist femboy",
+    "there's a reason why i put ads on the site, cause im broke",
+    "hi elliot",
+    "use screenzen to help with your phone addiction",
+    "donate to pydra.dev please",
+    "i promise you this is not a sponsorship for raid shadow legends",
+    "trans rights are human rights",
+    "we promise we're not gay (or are we?)",
+    "this website tracks with counter.dev",
+    "shoutout to mullvad vpn",
+    "not a shoutout",
+    "chat i think we turned the frogs gay",
+    "chat can we turn the frogs gay?"
+  ];
+  const random = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById("quotes").innerText = random;
+});
+// --- settings.js ---
+function loadSettings() {
+  const s = JSON.parse(localStorage.getItem('potato-settings') || '{}');
+  return {
+    theme: s.theme || 'default',
+    disableAds: s.disableAds || false,
+    reducedMotion: s.reducedMotion || false,
+    showNsfw: s.showNsfw || false,
+  };
+}
+function saveSettings(settings) {
+  localStorage.setItem('potato-settings', JSON.stringify(settings));
+  const notice = document.getElementById('save-notice');
+  if (notice) {
+    notice.classList.add('show');
+    setTimeout(() => notice.classList.remove('show'), 1500);
+  }
+}
+function applyAll(settings) {
+  applyTheme(settings.theme);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === settings.theme);
+  });
+  const ads = document.getElementById('toggle-ads');
+  if (ads) ads.checked = settings.disableAds;
+  const motion = document.getElementById('toggle-motion');
+  if (motion) motion.checked = settings.reducedMotion;
+  if (settings.reducedMotion) {
+    document.documentElement.style.setProperty('--transition', 'none');
+    document.querySelectorAll('*').forEach(el => {
+      el.style.transition = 'none';
+      el.style.animation = 'none';
+    });
+  } else {
+    document.documentElement.style.removeProperty('--transition');
+  }
+}
+function resetSettings() {
+  const defaults = { theme: 'default', disableAds: false, reducedMotion: false, showNsfw: false };
+  saveSettings(defaults);
+  applyAll(defaults);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const settings = loadSettings();
+  applyAll(settings);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      settings.theme = btn.dataset.theme;
+      applyAll(settings);
+      saveSettings(settings);
+    });
+  });
+  const ads = document.getElementById('toggle-ads');
+  if (ads) ads.addEventListener('change', e => {
+    settings.disableAds = e.target.checked;
+    saveSettings(settings);
+  });
+  const motion = document.getElementById('toggle-motion');
+  if (motion) motion.addEventListener('change', e => {
+    settings.reducedMotion = e.target.checked;
+    applyAll(settings);
+    saveSettings(settings);
+  });
+});
+// --- tab logic ---
+const TABS = {
+  home: `<div id="game-controls" aria-label="Game list controls">
+    <div id="list-controls-row">
+      <button id="select-prev" class="list-control-btn" type="button">select prev</button>
+      <button id="select-next" class="list-control-btn" type="button">select next</button>
+    </div>
+  </div>
+  <div id="gamecards-carousel" aria-label="Game card carousel">
+    <button id="carousel-left" class="carousel-arrow" type="button" aria-label="Scroll games left">&#8592;</button>
+    <div class="center cards" id="gamecards"></div>
+    <button id="carousel-right" class="carousel-arrow" type="button" aria-label="Scroll games right">&#8594;</button>
+  </div><br><br>
+  <button id="dmca" type="button">dmca</button>`,
+  requests: `<div class="request-form-wrapper">
+      <form
+        action="https://send.pageclip.co/nxgfc7AoXrluY5inMu7kHl8TLhir9v3T"
+        class="pageclip-form"
+        method="post"
+        style="width:100%;display:flex;flex-direction:column;gap:0.9rem;"
+      >
+        <div class="field">
+          <label for="game-name">game name</label>
+          <input
+            id="game-name"
+            type="text"
+            name="game_name"
+            placeholder="what game do you want?"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="game-type">game type</label>
+          <select id="game-type" name="game_type" required>
+            <option value="" disabled selected>select a type...</option>
+            <option value="flash">flash</option>
+            <option value="unity">unity</option>
+            <option value="html5">html5</option>
+            <option value="other">other / unsure</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="game-link">link to game <span class="muted">(optional)</span></label>
+          <input
+            id="game-link"
+            type="url"
+            name="game_link"
+            placeholder="https://..."
+          />
+        </div>
+        <div class="field">
+          <label for="notes">notes <span class="muted">(optional)</span></label>
+          <textarea
+            id="notes"
+            name="notes"
+            placeholder="anything else we should know?"
+          ></textarea>
+        </div>
+        <button type="submit" class="pageclip-form__submit">
+          <span>send request</span>
+        </button>
+      </form>
+    </div>`,
+  settings: `<div class="settings-wrapper">
+      <div class="settings-section">
+        <div class="settings-section-label">appearance</div>
+        <div class="settings-section-label" style="margin-top:0.25rem; margin-bottom:0.25rem; opacity:0.3; font-size:0.65rem;">theme</div>
+        <div class="theme-grid">
+          <button class="theme-btn active" data-theme="default" title="default">
+            <div class="theme-preview" style="background:#242424;"></div>
+            <span>default</span>
+          </button>
+          <button class="theme-btn" data-theme="midnight" title="midnight">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#0a0a1a,#1a1a3a);"></div>
+            <span>midnight</span>
+          </button>
+          <button class="theme-btn" data-theme="rose" title="rose">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#1a0a0a,#2a1010);"></div>
+            <span>rose</span>
+          </button>
+          <button class="theme-btn" data-theme="forest" title="forest">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#0a1a0a,#101a10);"></div>
+            <span>forest</span>
+          </button>
+          <button class="theme-btn" data-theme="slate" title="slate">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);"></div>
+            <span>slate</span>
+          </button>
+          <button class="theme-btn" data-theme="amber" title="amber">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#1a1200,#2a1e00);"></div>
+            <span>amber</span>
+          </button>
+          <button class="theme-btn" data-theme="ocean" title="ocean">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#001a2a,#002a3a);"></div>
+            <span>ocean</span>
+          </button>
+          <button class="theme-btn" data-theme="lavender" title="lavender">
+            <div class="theme-preview" style="background:linear-gradient(135deg,#12001a,#1e002a);"></div>
+            <span>lavender</span>
+          </button>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-label">ads</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-name">disable ads</span>
+            <span class="setting-desc">hides ads across the site. please consider keeping them on :)</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-ads" />
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+      </div>
+      <div class="settings-section">
+        <div class="settings-section-label">misc</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <span class="setting-name">reduced motion</span>
+            <span class="setting-desc">disables animations and transitions</span>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="toggle-motion" />
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span class="save-notice" id="save-notice">saved!</span>
+        <button onclick="resetSettings()" style="background:transparent;border:1px solid #444;color:white;font-family:'Figtree',sans-serif;font-size:0.8rem;padding:0.4rem 1rem;cursor:pointer;transition:border-color 0.2s ease;" onmouseover="this.style.borderColor='#fff'" onmouseout="this.style.borderColor='#444'">reset to defaults</button>
+      </div>
+    </div>`,
+  credits: `<div id="header" class="center">
+  <h1>credits</h1>
+  <p>site made by aj</p>
+  <br>
+  <h2>game sources</h2>
+  <p>3kh0</p>
+  <p>unblockify</p>
+  <p>thatoneperson</p>
+  <p>web ports are sourced from the <a id="underline" href="https://github.com/gays-studio/web-port-list" target="_blank">web port list</a></p>
+</div>`
+};
+function showTab(tab) {
+  const content = document.getElementById('tab-content');
+  content.innerHTML = TABS[tab] || '';
+  if (tab === 'settings') {
+    const settings = loadSettings();
+    applyAll(settings);
+    document.querySelectorAll('.theme-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        settings.theme = btn.dataset.theme;
+        applyAll(settings);
+        saveSettings(settings);
+      });
+    });
+    const ads = document.getElementById('toggle-ads');
+    if (ads) ads.addEventListener('change', e => {
+      settings.disableAds = e.target.checked;
+      saveSettings(settings);
+    });
+    const motion = document.getElementById('toggle-motion');
+    if (motion) motion.addEventListener('change', e => {
+      settings.reducedMotion = e.target.checked;
+      applyAll(settings);
+      saveSettings(settings);
+    });
+  }
+}
+function getTabFromHash() {
+  const hash = window.location.hash.replace('#', '');
+  if (TABS[hash]) return hash;
+  return 'home';
+}
+function setTab(tab) {
+  window.location.hash = tab;
+}
+window.addEventListener('hashchange', () => {
+  showTab(getTabFromHash());
+  setActiveTabBtn(getTabFromHash());
+});
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => setTab(btn.dataset.tab));
+});
+function setActiveTabBtn(tab) {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tab);
+  });
+}
+showTab(getTabFromHash());
+setActiveTabBtn(getTabFromHash());
+// --- requests tab ad modal logic ---
+document.addEventListener('DOMContentLoaded', function () {
+  if (document.querySelector('.pageclip-form')) {
+    const form = document.querySelector('.pageclip-form');
+    const submitBtn = form.querySelector('.pageclip-form__submit');
+    const modal = document.getElementById('ad-modal');
+    const adSubmitBtn = document.getElementById('ad-submit-btn');
+    const adTimer = document.getElementById('ad-timer');
+    if (submitBtn && modal && adSubmitBtn && adTimer) {
+      submitBtn.addEventListener('click', function (e) {
+        if (!form.checkValidity()) return;
+        const settings = JSON.parse(localStorage.getItem('potato-settings') || '{}');
+        if (settings.disableAds) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        openAdModal();
+      }, true);
+      function openAdModal() {
+        modal.classList.add('open');
+        let seconds = 5;
+        adTimer.textContent = `please wait ${seconds}s...`;
+        adSubmitBtn.disabled = true;
+        adSubmitBtn.classList.remove('ready');
+        const interval = setInterval(() => {
+          seconds--;
+          if (seconds <= 0) {
+            clearInterval(interval);
+            adTimer.textContent = 'good to go!';
+            adSubmitBtn.disabled = false;
+            adSubmitBtn.classList.add('ready');
+          } else {
+            adTimer.textContent = `please wait ${seconds}s...`;
+          }
+        }, 1000);
+      }
+      adSubmitBtn.addEventListener('click', async function () {
+        modal.classList.remove('open');
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        try {
+          const res = await fetch('https://pageclip-discord.oro10jua.workers.dev', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ item: { payload: data } }),
+          });
+          if (res.ok) {
+            submitBtn.classList.add('pageclip-form__submit--success');
+            submitBtn.querySelector('span').textContent = 'sent!';
+          } else {
+            submitBtn.querySelector('span').textContent = 'error, try again';
+          }
+        } catch (err) {
+          submitBtn.querySelector('span').textContent = 'error, try again';
+        }
+      });
+    }
+  }
+});
+// --- dmca modal logic ---
+document.getElementById('dmca').addEventListener('click', function () {
+  document.getElementById('dmca-modal').classList.add('open');
+});
+document.getElementById('dmca-modal-close').addEventListener('click', function () {
+  document.getElementById('dmca-modal').classList.remove('open');
+});
+  </script>
+  <!-- ad modal for requests tab -->
+  <div id="ad-modal">
+    <div id="ad-modal-inner">
+      <h3>please wait 5 seconds before submitting a game request</h3>
+      <div id="container-56642a332a1aaa05d84f77c811ea7ea2"></div>
+      <span id="ad-timer">please wait...</span>
+      <button id="ad-submit-btn" disabled>send request</button>
+      <p>ads help support the site!</p>
+    </div>
+  </div>
+</body>
+</html>
