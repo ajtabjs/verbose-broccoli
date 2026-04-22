@@ -6,6 +6,7 @@
       "ready to build amazing stuff",
         "we are not living the dream",
       "amazing stuff",
+        "society would crumble as a whole if eyedrops didn't exist",
         "used to be friends with 3kh0",
         "i'm friends with the owner of bliish.com!!",
         "LIVING THE DREAM!! ON EASTERN LANDIA ISLAND!!",
