@@ -6,6 +6,7 @@
       "ready to build amazing stuff",
         "we are not living the dream",
       "amazing stuff",
+        "some situations i didn't handle well back then, and now I'm scared it's too late to try again and redeem myself",
         "society would crumble as a whole if eyedrops didn't exist",
         "used to be friends with 3kh0",
         "i'm friends with the owner of bliish.com!!",
