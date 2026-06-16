@@ -210,6 +210,8 @@
 #donate-modal-inner h3,
 #donate-modal-inner p {
   margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 #donate-modal-close {
