@@ -244,5 +244,39 @@ function setupDmcaModal() {
   });
 }
 
+function openDonateModal() {
+  const modal = document.getElementById('donate-modal');
+  if (!modal) return;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function closeDonateModal() {
+  const modal = document.getElementById('donate-modal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+function setupDonateModal() {
+  const donateButton = document.getElementById('donate');
+  const modal = document.getElementById('donate-modal');
+  const closeButton = document.getElementById('donate-modal-close');
+  if (!donateButton || !modal || !closeButton) return;
+
+  donateButton.addEventListener('click', openDonateModal);
+  closeButton.addEventListener('click', closeDonateModal);
+
+  modal.addEventListener('click', function (event) {
+    if (event.target === modal) closeDonateModal();
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && modal.classList.contains('open')) closeDonateModal();
+  });
+}
+
 window.dmca = openDmcaModal;
+window.donate = openDonateModal;
 setupDmcaModal();
+setupDonateModal();

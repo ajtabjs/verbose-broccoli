@@ -128,7 +128,7 @@
   background-color: #242424;
 }
 
-#dmca {
+#dmca, #donate {
   background: transparent;
   color: #ffffff;
   font: inherit;
@@ -170,6 +170,49 @@
 }
 
 #dmca-modal-close {
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: inherit;
+  padding: 0.5rem 0.9rem;
+  width: fit-content;
+  cursor: pointer;
+}
+
+#donate-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+#donate-modal.open {
+  display: flex;
+}
+
+#donate-modal-inner {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid #ffffff;
+  background: #242424;
+  color: #ffffff;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+#donate-modal-inner h3,
+#donate-modal-inner p {
+  margin: 0;
+}
+
+#donate-modal-close {
   border: 1px solid #ffffff;
   background: transparent;
   color: inherit;

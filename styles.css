@@ -9,14 +9,21 @@ font-family: Arial, Helvetica, sans-serif;
   margin: 0;
  gap: 2rem;
 }
-#dmca{
+#footer-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+#dmca, #donate {
   border: #ffffff solid 1px;
-height:7vh;
-width: 7vw;
-display:flex;
-flex-direction: column;
-text-align:center;
- align-items: center;
+  height: 7vh;
+  width: 7vw;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
   justify-content: center;
 }
 .underline{
